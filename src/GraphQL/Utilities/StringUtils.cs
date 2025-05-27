@@ -135,4 +135,16 @@ public static class StringUtils
             arg2 = temp;
         }
     }
+
+    public static string GetFriendlyAttributeName(string name) => name.Remove(name.IndexOf(typeof(Attribute).Name));
+    
+    public static string AllowShorthandQuery(string query) => AllowShorthand(query, "query");
+
+    public static string AllowShorthandMutation(string mutation) => AllowShorthand(mutation, "mutation");
+
+    private static string AllowShorthand(string queryOrMutation, string prefix)
+    {
+        var trimmed = queryOrMutation.Trim();
+        return trimmed.StartsWith("{") || trimmed.StartsWith("(") ? $"{prefix} {queryOrMutation}" : queryOrMutation;
+    }
 }
